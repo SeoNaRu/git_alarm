@@ -38,6 +38,7 @@ flutter:
 
 
   assets:
+    - .env
     - assets/
 
   # fonts:

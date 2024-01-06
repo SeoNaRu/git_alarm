@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:git_commit/login/bloc/login_bloc.dart';
+import 'package:git_commit/login/bloc/login_event.dart';
+import 'package:git_commit/login/bloc/login_state.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -21,7 +25,7 @@ class _LoginViewState extends State<LoginView> {
     });
     var headers = {
       'Authorization':
-          'token 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'
+          'token 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'
     };
 
     var reposUrl = Uri.parse('https://api.github.com/users/$username/repos');
@@ -76,32 +80,40 @@ class _LoginViewState extends State<LoginView> {
         appBar: AppBar(
           title: const Text('하이'),
         ),
-        body: Container(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextField(
-                controller: _usernameController,
-                decoration: InputDecoration(
-                  labelText: 'GitHub 사용자 이름',
-                  border: OutlineInputBorder(),
-                ),
+        body: BlocBuilder<LoginBloc, LoginState>(
+          builder: (context, state) {
+            return Container(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TextField(
+                    controller: _usernameController,
+                    decoration: InputDecoration(
+                      labelText: 'GitHub 사용자 이름',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  // if (_isLoading)
+                  //   CircularProgressIndicator()
+                  // else
+                  //   Text(_commitMessage),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<LoginBloc>().add(
+                          (GitHubName(nickName: _usernameController.text)));
+                    },
+                    // onPressed: _isLoading
+                    //     ? null
+                    //     : () => checkUserCommits(_usernameController.text),
+                    child: Text('Commit 조회하기'),
+                  ),
+                ],
               ),
-              SizedBox(height: 10),
-              if (_isLoading)
-                CircularProgressIndicator()
-              else
-                Text(_commitMessage),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: _isLoading
-                    ? null
-                    : () => checkUserCommits(_usernameController.text),
-                child: Text('Commit 조회하기'),
-              ),
-            ],
-          ),
+            );
+          },
         ));
   }
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:git_commit/app/app_view.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'package:git_commit/app/provider/app_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const AppView());
+  await dotenv.load(fileName: '.env');
+  runApp(const AppPage());
 }

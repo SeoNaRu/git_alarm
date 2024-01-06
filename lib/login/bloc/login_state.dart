@@ -1,45 +1,33 @@
-// import 'package:equatable/equatable.dart';
-// import 'package:with_tft/login/model/tire_model.dart';
-// import 'package:with_tft/login/model/user_model.dart';
+import 'dart:ffi';
 
-// enum AuthenticationStatus { unknown, authenticated, unauthenticated }
+import 'package:equatable/equatable.dart';
 
-// class LoginState extends Equatable {
-//   final AuthenticationStatus status;
-//   final User user;
-//   final Tier tier;
+class LoginState extends Equatable {
+  final bool githubLoading;
 
-//   const LoginState({
-//     required this.status,
-//     required this.user,
-//     required this.tier,
-//   });
+  const LoginState({
+    required this.githubLoading,
+  });
 
-//   factory LoginState.init() {
-//     return const LoginState(
-//       status: AuthenticationStatus.unknown,
-//       user: User.empty,
-//       tier: Tier.empty,
-//     );
-//   }
+  factory LoginState.init() {
+    return const LoginState(
+      githubLoading: false,
+    );
+  }
 
-//   @override
-//   String toString() {
-//     return 'LoginState{status: $status, user: $user , tier: $tier}';
-//   }
+  @override
+  String toString() {
+    return 'LoginState{status: $githubLoading}';
+  }
 
-//   @override
-//   List<Object?> get props => [status, user, tier];
+  @override
+  List<Object?> get props => [githubLoading];
 
-//   LoginState copyWith({
-//     AuthenticationStatus? status,
-//     User? user,
-//     Tier? tier,
-//   }) {
-//     return LoginState(
-//       status: status ?? this.status,
-//       user: user ?? this.user,
-//       tier: tier ?? this.tier,
-//     );
-//   }
-// }
+  LoginState copyWith({
+    bool? githubLoading,
+  }) {
+    return LoginState(
+      githubLoading: githubLoading ?? this.githubLoading,
+    );
+  }
+}
