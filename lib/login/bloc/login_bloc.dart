@@ -25,29 +25,20 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         var today = DateTime.now();
 
         for (var repo in repos) {
-          var commitsUrl = Uri.parse(
-              'https://api.github.com/repos/$username/${repo['name']}/commits');
-          var commitsResponse = await http.get(commitsUrl, headers: headers);
+          dynamic response = await _authenticationRepository.githubGet(
+              'api.github.com',
+              'repos/${event.nickName}/${repo['name']}/commits');
+        }
+        if (response.statusCode == 200) {
+          List commits = json.decode(response.body);
 
-          if (commitsResponse.statusCode == 200) {
-            List commits = json.decode(commitsResponse.body);
-
-            bool commitToday = commits.any((commit) {
-              DateTime commitDate =
-                  DateTime.parse(commit['commit']['committer']['date']);
-              return commitDate.year == today.year &&
-                  commitDate.month == today.month &&
-                  commitDate.day == today.day;
-            });
-
-            if (commitToday) {
-              setState(() {
-                _commitMessage = '오늘 $username의 커밋이 있습니다: ${repo['name']}';
-                _isLoading = false;
-                return;
-              });
-            }
-          }
+          bool commitToday = commits.any((commit) {
+            DateTime commitDate =
+                DateTime.parse(commit['commit']['committer']['date']);
+            return commitDate.year == today.year &&
+                commitDate.month == today.month &&
+                commitDate.day == today.day;
+          });
         }
       }
     } catch (e) {
