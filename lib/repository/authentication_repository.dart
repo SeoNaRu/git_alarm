@@ -97,8 +97,7 @@ class AuthenticationRepository {
       http.Response response = await http.get(url, headers: {
         "Authorization": "token ${MyEnv.githubKey}",
       });
-
-      return jsonDecode(utf8.decode(response.bodyBytes));
+      return response;
     } catch (e) {
       debugPrint(']-----] e : ${e.toString()} [-----[');
     }

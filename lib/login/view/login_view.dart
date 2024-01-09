@@ -95,19 +95,18 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  // if (_isLoading)
-                  //   CircularProgressIndicator()
-                  // else
-                  //   Text(_commitMessage),
+                  if (state.githubLoading)
+                    CircularProgressIndicator()
+                  else
+                    Text(state.commitMessage),
                   SizedBox(height: 10),
                   ElevatedButton(
-                    onPressed: () {
-                      context.read<LoginBloc>().add(
-                          (GitHubName(nickName: _usernameController.text)));
-                    },
-                    // onPressed: _isLoading
-                    //     ? null
-                    //     : () => checkUserCommits(_usernameController.text),
+                    onPressed: state.githubLoading
+                        ? null
+                        : () {
+                            context.read<LoginBloc>().add((GitHubName(
+                                nickName: _usernameController.text)));
+                          },
                     child: Text('Commit 조회하기'),
                   ),
                 ],

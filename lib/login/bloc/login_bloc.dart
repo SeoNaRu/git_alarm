@@ -17,29 +17,41 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
   FutureOr<void> _onGitHubName(GitHubName event, emit) async {
     try {
+      emit(state.copyWith(githubLoading: true));
+      emit(state.copyWith(commitMessage: '조회중...'));
       dynamic response = await _authenticationRepository.githubGet(
-          'api.github.com', '/users/${event.nickName}/repos}');
-
+          'api.github.com', '/users/${event.nickName}/repos');
       if (response.statusCode == 200) {
         List repos = json.decode(response.body);
         var today = DateTime.now();
-
         for (var repo in repos) {
-          dynamic response = await _authenticationRepository.githubGet(
+          dynamic userResponse = await _authenticationRepository.githubGet(
               'api.github.com',
-              'repos/${event.nickName}/${repo['name']}/commits');
+              '/repos/${event.nickName}/${repo['name']}/commits');
+          if (userResponse.statusCode == 200) {
+            List commits = json.decode(userResponse.body);
+            bool commitToday = commits.any((commit) {
+              DateTime commitDate =
+                  DateTime.parse(commit['commit']['committer']['date']);
+              return commitDate.year == today.year &&
+                  commitDate.month == today.month &&
+                  commitDate.day == today.day;
+            });
+            if (commitToday) {
+              emit(state.copyWith(githubLoading: commitToday));
+              emit(state.copyWith(
+                  commitMessage:
+                      '오늘 ${event.nickName} 커밋이 있습니다: ${repo['name']}'));
+            }
+          }
         }
-        if (response.statusCode == 200) {
-          List commits = json.decode(response.body);
-
-          bool commitToday = commits.any((commit) {
-            DateTime commitDate =
-                DateTime.parse(commit['commit']['committer']['date']);
-            return commitDate.year == today.year &&
-                commitDate.month == today.month &&
-                commitDate.day == today.day;
-          });
-        }
+        emit(state.copyWith(githubLoading: false));
+        state.commitMessage == '조회중...'
+            ? emit(state.copyWith(commitMessage: '오늘 커밋이 없습니다'))
+            : emit(state.copyWith(commitMessage: state.commitMessage));
+      } else {
+        emit(state.copyWith(
+            commitMessage: '레포지토리 조회 실패: ${response.statusCode}'));
       }
     } catch (e) {
       debugPrint("Error occurred: $e");
