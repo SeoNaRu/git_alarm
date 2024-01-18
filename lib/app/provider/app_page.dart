@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:git_commit/app/app_view.dart';
 import 'package:git_commit/login/bloc/login_bloc.dart';
+import 'package:git_commit/router/bloc/nav_nar_bloc_bloc.dart';
 
 class AppPage extends StatefulWidget {
   const AppPage({
@@ -20,10 +21,9 @@ class _AppPageState extends State<AppPage> {
         BlocProvider(
           create: (context) => LoginBloc(),
         ),
-
-        // BlocProvider(
-        //   create: (context) => TestBloc(),
-        // ),
+        BlocProvider(
+          create: (context) => NavNarBlocBloc(),
+        ),
       ],
       child: const AppView(),
     );

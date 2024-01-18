@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:git_commit/router/route_conf.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -27,24 +29,29 @@ class _LoginViewState extends State<LoginView> {
               ),
               Column(
                 children: [
-                  Container(
-                    width: double.infinity,
-                    height: 61,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey,
-                        width: 1.0,
+                  InkWell(
+                    onTap: () {
+                      GoRouter.of(context).go(RoutePath.home);
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 61,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
+                          width: 1.0,
+                        ),
+                        // 모서리 둥글게 설정
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                      // 모서리 둥글게 설정
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'GitHub으로 시작하기',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
+                      child: Center(
+                        child: Text(
+                          'GitHub으로 시작하기',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey),
+                        ),
                       ),
                     ),
                   ),
