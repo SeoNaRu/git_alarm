@@ -8,7 +8,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  double _currentSliderValue = 20;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -77,7 +76,7 @@ class _HomeViewState extends State<HomeView> {
                           // 모서리 둥글게 설정
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Column(
+                        child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -102,7 +101,7 @@ class _HomeViewState extends State<HomeView> {
                           // 모서리 둥글게 설정
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Column(
+                        child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -130,7 +129,7 @@ class _HomeViewState extends State<HomeView> {
                 padding: const EdgeInsets.all(36),
                 child: Column(
                   children: [
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -146,7 +145,7 @@ class _HomeViewState extends State<HomeView> {
                                 color: Colors.grey))
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     GridView.builder(

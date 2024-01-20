@@ -41,7 +41,6 @@ class _LoginViewState extends State<LoginView> {
                           color: Colors.grey,
                           width: 1.0,
                         ),
-                        // 모서리 둥글게 설정
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Center(
