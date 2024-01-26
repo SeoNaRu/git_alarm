@@ -31,7 +31,7 @@ class _LoginViewState extends State<LoginView> {
                 children: [
                   InkWell(
                     onTap: () {
-                      GoRouter.of(context).go(RoutePath.home);
+                      // GoRouter.of(context).go(RoutePath.home);
                     },
                     child: Container(
                       width: double.infinity,

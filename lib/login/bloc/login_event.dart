@@ -16,3 +16,5 @@ class GitHubName extends LoginEvent {
     required this.nickName,
   });
 }
+
+class GitHubLogin extends LoginEvent {}
