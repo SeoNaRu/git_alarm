@@ -9,6 +9,8 @@ import 'package:git_commit/login/bloc/login_state.dart';
 import 'package:git_commit/my/my_env.dart';
 import 'package:git_commit/repository/authentication_repository.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthenticationRepository _authenticationRepository;
@@ -63,7 +65,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   FutureOr<void> _onGitHubLogin(GitHubLogin event, emit) async {
-    // GitHub 로그인 URL 생성
+    // launchUrlString(
+    //     'https://github.com/login/oauth/authorize?client_id=${MyEnv.clientId}');
+    // // GitHub 로그인 URL 생성
     final url = Uri.https('github.com', '/login/oauth/authorize', {
       'client_id': MyEnv.clientId,
       'scope': 'read:user user:email',
