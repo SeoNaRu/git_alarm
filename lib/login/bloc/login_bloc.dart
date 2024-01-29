@@ -65,46 +65,37 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   FutureOr<void> _onGitHubLogin(GitHubLogin event, emit) async {
-    // launchUrlString(
-    //     'https://github.com/login/oauth/authorize?client_id=${MyEnv.clientId}');
-    // // GitHub 로그인 URL 생성
-    final url = Uri.https('github.com', '/login/oauth/authorize', {
-      'client_id': MyEnv.clientId,
-      'scope': 'read:user user:email',
-    });
+    final authorizationEndpoint =
+        'https://github.com/login/oauth/authorize?client_id=${MyEnv.clientId}&redirect_uri=${MyEnv.callbackUrlScheme}&scope=repo user&state=random_state_string';
 
-    // 사용자를 인증 페이지로 리디렉션
-    final result = await FlutterWebAuth.authenticate(
-        url: url.toString(), callbackUrlScheme: MyEnv.callbackUrlScheme);
+    if (await canLaunch(authorizationEndpoint)) {
+      await launch(authorizationEndpoint);
+    } else {
+      throw Exception('Could not launch $authorizationEndpoint');
+    }
 
-    // 인증 코드 추출
-    final code = Uri.parse(result).queryParameters['code'];
+    //  여기에 리디렉션 처리 로직 추가
+  }
 
-    // 인증 코드를 사용하여 사용자 토큰 받기
+  Future<void> requestAccessToken(String code) async {
     final response = await http.post(
-      Uri.https('github.com', '/login/oauth/access_token'),
+      Uri.parse('https://github.com/login/oauth/access_token'),
       headers: {
+        'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: {
+      body: json.encode({
         'client_id': MyEnv.clientId,
         'client_secret': MyEnv.clientSecret,
         'code': code,
-      },
+      }),
     );
 
-    // 토큰 추출
-    final token = json.decode(response.body)['access_token'];
-
-    // 토큰을 사용하여 사용자 정보 가져오기
-    final userResponse = await http.get(
-      Uri.https('api.github.com', '/user'),
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
-    );
-
-    final userData = json.decode(userResponse.body);
-    print(userData); // 사용자 정보 출력
+    if (response.statusCode == 200) {
+      final responseMap = json.decode(response.body);
+      final String accessToken = responseMap['access_token'];
+    } else {
+      throw Exception('Failed to obtain an access token');
+    }
   }
 }
