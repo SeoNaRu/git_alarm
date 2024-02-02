@@ -5,6 +5,7 @@ class RouteName {
   static const String setting = 'setting';
   static const String alarms = 'alarms';
   static const String splash = 'splash';
+  static const String gitLoginWebView = 'gitLoginWebView';
 }
 
 class RoutePath {
@@ -14,4 +15,5 @@ class RoutePath {
   static const String setting = '/setting';
   static const String alarms = '/alarms';
   static const String splash = '/splash';
+  static const String gitLoginWebView = '/gitLoginWebView';
 }

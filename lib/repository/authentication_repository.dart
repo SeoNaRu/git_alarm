@@ -102,4 +102,21 @@ class AuthenticationRepository {
       debugPrint(']-----] e : ${e.toString()} [-----[');
     }
   }
+
+  Future<dynamic> gitLoginGet(
+    String myAuthority,
+  ) async {
+    Uri url = Uri.parse(myAuthority);
+    debugPrint(url.toString());
+    try {
+      http.Response response = await http.get(url, headers: {
+        'Content-Type': 'application/json',
+        "Accept": "application/json",
+      });
+
+      return jsonDecode(utf8.decode(response.bodyBytes));
+    } catch (e) {
+      debugPrint(']-----] e : ${e.toString()} [-----[');
+    }
+  }
 }

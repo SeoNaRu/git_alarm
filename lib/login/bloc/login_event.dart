@@ -17,4 +17,9 @@ class GitHubName extends LoginEvent {
   });
 }
 
-class GitHubLogin extends LoginEvent {}
+class GitHubLogin extends LoginEvent {
+  final String Uri;
+  const GitHubLogin({
+    required this.Uri,
+  });
+}

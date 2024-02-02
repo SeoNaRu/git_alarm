@@ -4,6 +4,7 @@ import 'package:git_commit/common/not_found_screen.dart';
 import 'package:git_commit/common/splash_screen.dart';
 import 'package:git_commit/home/view/home_view.dart';
 import 'package:git_commit/login/view/login_view.dart';
+import 'package:git_commit/login/view/oauth_webview.dart';
 import 'package:git_commit/router/route_conf.dart';
 import 'package:git_commit/router/scaffold_with_nested_navigation.dart';
 import 'package:git_commit/setting/view/setting_veiw.dart';
@@ -33,6 +34,13 @@ GoRouter router() {
         name: RouteName.login,
         pageBuilder: (context, state) => const NoTransitionPage(
           child: LoginView(),
+        ),
+      ),
+      GoRoute(
+        path: RoutePath.gitLoginWebView,
+        name: RouteName.gitLoginWebView,
+        pageBuilder: (context, state) => const NoTransitionPage(
+          child: OAuthWebView(),
         ),
       ),
       ShellRoute(

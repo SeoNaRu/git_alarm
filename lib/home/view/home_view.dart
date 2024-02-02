@@ -148,30 +148,6 @@ class _HomeViewState extends State<HomeView> {
                     const SizedBox(
                       height: 20,
                     ),
-                    GridView.builder(
-                      shrinkWrap: true, // 그리드 뷰가 차지하는 영역만큼만 크기를 가지도록 설정
-                      physics:
-                          NeverScrollableScrollPhysics(), // 그리드 뷰의 스크롤 기능을 비활성화
-
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 16, // 한 행에 10개의 그리드 아이템
-                        crossAxisSpacing: 5, // 가로 방향 간격
-                        mainAxisSpacing: 5, // 세로 방향 간격
-                        childAspectRatio: 1, // 아이템의 가로세로 비율을 1로 설정하여 정사각형 만들기
-                      ),
-                      itemCount: 112, // 생성할 아이템의 총 개수
-                      itemBuilder: (context, index) {
-                        // 각 아이템의 빌더
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey, // 아이템의 배경색
-                            borderRadius:
-                                BorderRadius.circular(3), // 아이템의 둥근 모서리
-                          ),
-                        );
-                      },
-                    ),
                   ],
                 ),
               ),

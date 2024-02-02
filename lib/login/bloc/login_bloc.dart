@@ -3,14 +3,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_web_auth/flutter_web_auth.dart';
+
 import 'package:git_commit/login/bloc/login_event.dart';
 import 'package:git_commit/login/bloc/login_state.dart';
-import 'package:git_commit/my/my_env.dart';
+
 import 'package:git_commit/repository/authentication_repository.dart';
-import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+
+import 'package:hive/hive.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthenticationRepository _authenticationRepository;
@@ -65,37 +64,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   FutureOr<void> _onGitHubLogin(GitHubLogin event, emit) async {
-    final authorizationEndpoint =
-        'https://github.com/login/oauth/authorize?client_id=${MyEnv.clientId}&redirect_uri=${MyEnv.callbackUrlScheme}&scope=repo user&state=random_state_string';
-
-    if (await canLaunch(authorizationEndpoint)) {
-      await launch(authorizationEndpoint);
-    } else {
-      throw Exception('Could not launch $authorizationEndpoint');
-    }
-
-    //  여기에 리디렉션 처리 로직 추가
-  }
-
-  Future<void> requestAccessToken(String code) async {
-    final response = await http.post(
-      Uri.parse('https://github.com/login/oauth/access_token'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: json.encode({
-        'client_id': MyEnv.clientId,
-        'client_secret': MyEnv.clientSecret,
-        'code': code,
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      final responseMap = json.decode(response.body);
-      final String accessToken = responseMap['access_token'];
-    } else {
-      throw Exception('Failed to obtain an access token');
-    }
+    dynamic response = await _authenticationRepository.gitLoginGet(event.Uri);
+    var box = await Hive.openBox('auth');
+    await box.put('accessToken', response['access_token']);
+    final accessToken = await box.get('accessToken');
+    print(accessToken);
   }
 }

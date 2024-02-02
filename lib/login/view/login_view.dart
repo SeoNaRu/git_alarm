@@ -37,8 +37,8 @@ class _LoginViewState extends State<LoginView> {
                     children: [
                       InkWell(
                         onTap: () {
-                          // GoRouter.of(context).go(RoutePath.home);
-                          context.read<LoginBloc>().add((GitHubLogin()));
+                          GoRouter.of(context).go(RoutePath.gitLoginWebView);
+                          // context.read<LoginBloc>().add((GitHubLogin()));
                         },
                         child: Container(
                           width: double.infinity,
