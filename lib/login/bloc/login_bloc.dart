@@ -29,6 +29,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (response.statusCode == 200) {
         List repos = json.decode(response.body);
         var today = DateTime.now();
+
         for (var repo in repos) {
           dynamic userResponse = await _authenticationRepository.githubGet(
               'api.github.com',
@@ -38,6 +39,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             bool commitToday = commits.any((commit) {
               DateTime commitDate =
                   DateTime.parse(commit['commit']['committer']['date']);
+
               return commitDate.year == today.year &&
                   commitDate.month == today.month &&
                   commitDate.day == today.day;
@@ -65,9 +67,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   FutureOr<void> _onGitHubLogin(GitHubLogin event, emit) async {
     dynamic response = await _authenticationRepository.gitLoginGet(event.Uri);
+
     var box = await Hive.openBox('auth');
+
     await box.put('accessToken', response['access_token']);
+
     final accessToken = await box.get('accessToken');
-    print(accessToken);
+    print('$accessToken');
+    dynamic response1 = await _authenticationRepository.passGet(
+        'github-alarm.vercel.app', '/api/userData', accessToken);
+    print('유저 정보 $response1 ');
   }
 }

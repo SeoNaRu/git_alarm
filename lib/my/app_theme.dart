@@ -4,7 +4,8 @@ class AppTheme {
   static final ThemeData theme = ThemeData(
     iconTheme: const IconThemeData(color: Colors.white),
     primaryColor: const Color.fromARGB(255, 21, 232, 84),
-    scaffoldBackgroundColor: const Color(0xFF151515),
+    // scaffoldBackgroundColor: const Color(0xFF151515),
+    scaffoldBackgroundColor: Color(0xFF24252F),
     focusColor: Colors.white,
     brightness: Brightness.dark,
     textTheme: const TextTheme(

@@ -47,15 +47,14 @@ class AuthenticationRepository {
   }
 
   Future<dynamic> passGet(
-    String myAuthority,
-    String unencodedPath,
-  ) async {
+      String myAuthority, String unencodedPath, String accessToken) async {
     Uri url = Uri.parse('https://$myAuthority$unencodedPath');
     debugPrint(url.toString());
     try {
       http.Response response = await http.get(url, headers: {
         'Content-Type': 'application/json',
         "Accept": "application/json",
+        "Authorization": "Bearer $accessToken",
       });
 
       return jsonDecode(utf8.decode(response.bodyBytes));

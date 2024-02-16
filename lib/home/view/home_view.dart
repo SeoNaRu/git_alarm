@@ -50,8 +50,7 @@ class _HomeViewState extends State<HomeView> {
                     width: 314, // 슬라이더의 너비
                     height: 6, // 슬라이더의 높이
                     child: ClipRRect(
-                      borderRadius:
-                          BorderRadius.circular(10), // 슬라이더의 둥근 모서리 반경
+                      borderRadius: BorderRadius.circular(5), // 슬라이더의 둥근 모서리 반경
                       child: LinearProgressIndicator(
                           value: 0.24, // 현재 값
                           backgroundColor: Colors.grey[300], // 슬라이더 배경 색

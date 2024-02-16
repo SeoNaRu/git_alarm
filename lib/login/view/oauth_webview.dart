@@ -32,8 +32,8 @@ class _OAuthWebViewState extends State<OAuthWebView> {
           onPageFinished: (String url) {},
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
-            if (request.url.contains(
-                "https://github-alarm.vercel.app/api/getAccessToken")) {
+            if (request.url
+                .contains("https://github-alarm.vercel.app/api/accessToken")) {
               print(request.url);
               context.read<LoginBloc>().add((GitHubLogin(Uri: request.url)));
               GoRouter.of(context).go(RoutePath.home);

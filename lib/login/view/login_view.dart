@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:git_commit/login/bloc/login_bloc.dart';
@@ -14,10 +15,132 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  List<Widget> list = [
+    Container(
+      color: Colors.amber,
+      child: const Text.rich(
+        TextSpan(
+          children: [
+            TextSpan(
+              text: '뉴비 개발자님,\n',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w700,
+                height: 0,
+                letterSpacing: -0.44,
+              ),
+            ),
+            TextSpan(
+              text: '지속적인 커밋',
+              style: TextStyle(
+                color: Color(0xFF5498FF),
+                fontSize: 22,
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w700,
+                height: 0,
+                letterSpacing: -0.44,
+              ),
+            ),
+            TextSpan(
+              text: '을 위해\n어서오세요!',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w700,
+                height: 0,
+                letterSpacing: -0.44,
+              ),
+            ),
+          ],
+        ),
+        textAlign: TextAlign.center,
+      ),
+    ),
+    Container(
+      color: Colors.black,
+      child: Text.rich(
+        TextSpan(
+          children: [
+            TextSpan(
+              text: '매일 매일\n해야 하는 개발 공부, \n',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w700,
+                height: 0,
+                letterSpacing: -0.44,
+              ),
+            ),
+            TextSpan(
+              text: '미루게 되지 않으셨나요?',
+              style: TextStyle(
+                color: Color(0xFF5498FF),
+                fontSize: 22,
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w700,
+                height: 0,
+                letterSpacing: -0.44,
+              ),
+            ),
+          ],
+        ),
+        textAlign: TextAlign.center,
+      ),
+    ),
+    Container(
+      color: Colors.blue,
+      child: Text.rich(
+        TextSpan(
+          children: [
+            TextSpan(
+              text: '확실한 습관을\n형성하기 위해서는\n',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w700,
+                height: 0,
+                letterSpacing: -0.44,
+              ),
+            ),
+            TextSpan(
+              text: '총 66일',
+              style: TextStyle(
+                color: Color(0xFF5498FF),
+                fontSize: 22,
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w700,
+                height: 0,
+                letterSpacing: -0.44,
+              ),
+            ),
+            TextSpan(
+              text: '이 필요하다고 해요.',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w700,
+                height: 0,
+                letterSpacing: -0.44,
+              ),
+            ),
+          ],
+        ),
+        textAlign: TextAlign.center,
+      ),
+    )
+  ];
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
+        CarouselController buttonCarouselController = CarouselController();
+
         return Scaffold(
           body: SafeArea(
             child: Padding(
@@ -25,13 +148,9 @@ class _LoginViewState extends State<LoginView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    '개발자님!\n커밋 습관형성을 위해\n오신 것을 환영해요!',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey),
+                  CarouselSlider(
+                    options: CarouselOptions(),
+                    items: list.map((item) => item).toList(),
                   ),
                   Column(
                     children: [
