@@ -29,8 +29,39 @@ class _HomeViewState extends State<HomeView> {
                   Text('22일 차 됐어요!',
                       style:
                           TextStyle(fontSize: 22, fontWeight: FontWeight.w700)),
+                  SizedBox(
+                    height: 60,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: List.generate(5, (index) {
+                      return Container(
+                        width: 50,
+                        height: 32,
+                        decoration: ShapeDecoration(
+                          color: Color(0xFF5498FF),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            '7일',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                              letterSpacing: -0.28,
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
                   Container(
-                    height: 454,
+                    height: 394,
                   ),
                 ],
               ),

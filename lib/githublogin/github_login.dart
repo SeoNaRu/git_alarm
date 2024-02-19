@@ -11,11 +11,8 @@ class GithubLogin extends StatefulWidget {
 }
 
 class _GithubLoginState extends State<GithubLogin> {
-  // CLIENT_ID
   final String clientId = '';
-  // CLIENT_SECRET
   final String clientSecret = '';
-  // CALLBACK_URL
   final String callbackUrl = '';
 
   Future<void> signInWithGithub() async {
